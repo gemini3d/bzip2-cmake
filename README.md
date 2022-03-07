@@ -13,3 +13,5 @@ ctest --test-dir build
 
 cmake --install build
 ```
+
+We use CMake FetchContent to retrieve BZip2 source from host website, building it unmodified except addition of CMake.
