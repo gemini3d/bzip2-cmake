@@ -1,0 +1,40 @@
+name: ci
+
+env:
+  CTEST_PARALLEL_LEVEL: 3
+  CMAKE_BUILD_TYPE: Release
+  HOMEBREW_NO_INSTALL_CLEANUP: 1
+
+on:
+  push:
+    paths:
+      - "**/*.c"
+      - "**/CMakeLists.txt"
+      - "**.cmake"
+      - ".github/workflows/ci.yml"
+
+jobs:
+
+  cmake:
+    strategy:
+      matrix:
+        shared: [true, false]
+        os: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Configure
+      run: cmake -B build -DCMAKE_INSTALL_PREFIX:PATH=${{ runner.temp }} -DBUILD_SHARED_LIBS:BOOL=${{ matrix.shared }}
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Test
+      run: ctest --test-dir build --no-tests=error -V
+
+    - name: Install
+      run: cmake --install build
