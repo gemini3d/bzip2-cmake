@@ -35,6 +35,8 @@ VERSION ${PROJECT_VERSION}
 )
 
 install(TARGETS bz2)
+install(FILES ${bzp_SOURCE_DIR}/bzlib.h TYPE INCLUDE)
+
 
 if(BUILD_UTILS)
   add_executable(bzip2 ${bzp_SOURCE_DIR}/bzip2.c)
