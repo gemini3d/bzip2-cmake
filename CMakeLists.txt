@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14...3.23)
+cmake_minimum_required(VERSION 3.14...3.25)
 
 project(bzip2
 LANGUAGES C
@@ -12,9 +12,12 @@ include(FetchContent)
 include(cmake/options.cmake)
 
 FetchContent_Declare(bzp
-URL https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
-URL_HASH SHA256=ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269
+GIT_REPOSITORY https://gitlab.com/bzip2/bzip2
+GIT_TAG bzip2-1.0.8
+GIT_SHALLOW true
 UPDATE_DISCONNECTED true
+INACTIVITY_TIMEOUT 60
+TLS_VERIFY true
 )
 
 FetchContent_Populate(bzp)
